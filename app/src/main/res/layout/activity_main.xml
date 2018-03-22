@@ -1,42 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/refresh"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:background="@android:color/holo_red_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:layout_margin="5dp"
+            android:background="@android:color/holo_red_light"
+            android:padding="15dp"
             android:text="刷新"
-            android:textSize="18dp"
-            />
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/delete"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:background="@android:color/holo_red_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:layout_margin="5dp"
+            android:background="@android:color/holo_red_light"
+            android:padding="15dp"
             android:text="减一个"
-            android:textSize="18dp"
-            />
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
 
     </LinearLayout>
+
     <com.study.xuan.recyclerviewstudy.SRecyclerView
         android:id="@+id/rcy"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp" />
+
+    <RelativeLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="200dp"
+        android:layout_gravity="right"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/v_center"
+            android:layout_width="1px"
+            android:layout_centerVertical="true"
+            android:layout_height="10px" />
+
+        <TextView
+            android:id="@+id/tv_cache_view"
+            android:layout_width="match_parent"
+            android:layout_above="@id/v_center"
+            android:textColor="@android:color/white"
+            android:background="@android:color/black"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_create_and_bind"
+            android:layout_width="match_parent"
+            android:layout_below="@id/v_center"
+            android:textColor="@android:color/white"
+            android:background="@android:color/black"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            />
+    </RelativeLayout>
+
+
+</FrameLayout>

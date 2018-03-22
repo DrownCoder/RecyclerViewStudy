@@ -4,18 +4,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SRecyclerView rcy;
     private RcyAdapter mAdapter;
     private ArrayList<RcyModel> mData;
+    private TextView tvCacheView;
+    private TextView tvCreateAndBind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initOperate();
         rcy = findViewById(R.id.rcy);
+        tvCacheView = findViewById(R.id.tv_cache_view);
+        tvCreateAndBind = findViewById(R.id.tv_create_and_bind);
+        tvCreateAndBind.setMovementMethod(ScrollingMovementMethod.getInstance());
         mData = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             RcyModel model = new RcyModel();
@@ -30,28 +33,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             model.title = "这是第" + i + "个";
             mData.add(model);
         }
-        mAdapter = new RcyAdapter(mData, this, rcy);
+        mAdapter = new RcyAdapter(mData, this, rcy, tvCreateAndBind);
         rcy.setAdapter(mAdapter);
-        rcy.setLayoutManager(new LinearLayoutManager(this));
         rcy.setOnLayoutListener(new SRecyclerView.onLayoutListener() {
             @Override
             public void beforeLayout() {
-                //RcyLog.logScrapCache(rcy);
+                rcy.setAllCache();
             }
 
             @Override
             public void afterLayout() {
-                //RcyLog.logScrapCache(rcy);
             }
         });
         rcy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 //RcyLog.logScrapCache(recyclerView);
-                RcyLog.logCache("onScroll时：", recyclerView);
-                RcyLog.logPool(recyclerView);
+                //RcyLog.logCache("onScroll时：", recyclerView);
+                //RcyLog.logPool(recyclerView);
+                RcyLog.loaAllCache(tvCacheView, rcy);
             }
         });
+        rcy.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initOperate() {
