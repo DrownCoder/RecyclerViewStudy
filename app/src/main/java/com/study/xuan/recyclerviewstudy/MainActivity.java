@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<RcyModel> mData;
     private TextView tvCacheView;
     private TextView tvCreateAndBind;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rcy = findViewById(R.id.rcy);
         tvCacheView = findViewById(R.id.tv_cache_view);
         tvCreateAndBind = findViewById(R.id.tv_create_and_bind);
-        tvCreateAndBind.setMovementMethod(ScrollingMovementMethod.getInstance());
+        scrollView = findViewById(R.id.scroll);
         mData = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             RcyModel model = new RcyModel();
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //RcyLog.logCache("onScroll时：", recyclerView);
                 //RcyLog.logPool(recyclerView);
                 RcyLog.loaAllCache(tvCacheView, rcy);
+                scrollView.scrollBy(dx, dy);
             }
         });
         rcy.setLayoutManager(new LinearLayoutManager(this));
@@ -68,11 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.refresh:
-                mAdapter.notifyDataSetChanged();
+                //mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(0);
                 break;
             case R.id.delete:
                 mData.remove(0);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemRemoved(0);
+                //mAdapter.notifyDataSetChanged();
                 break;
         }
     }

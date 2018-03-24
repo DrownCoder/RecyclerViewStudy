@@ -60,15 +60,19 @@
             android:textColor="@android:color/white"
             android:background="@android:color/black"
             android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/tv_create_and_bind"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_below="@id/v_center"
-            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
             android:background="@android:color/black"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            />
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_create_and_bind"
+                android:layout_width="match_parent"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"
+                />
+        </ScrollView>
     </RelativeLayout>
 
 
