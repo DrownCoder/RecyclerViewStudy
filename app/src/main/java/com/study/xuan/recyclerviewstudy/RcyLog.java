@@ -127,8 +127,14 @@ public class RcyLog {
             StringBuilder builder = new StringBuilder();
             builder.append("当前Attached数量：").append(mAttached.maxSize).append("\n")
 //                    .append("当前Changed数量：").append(mChanged.size()).append("\n")
-                    .append("当前Cache的数量：").append(mCached.size()).append("\n")
-                    .append("当前Pool中的TextViewHolder的数量：").append(recycledViewPool.getRecycledViewCount(0));
+                    .append("当前Cache的数量：").append(mCached.size()).append("\n");
+            if (mCached.size() > 0) {
+                for (RecyclerView.ViewHolder vh : mCached) {
+                    builder.append(vh.getItemViewType() == 1 ? "Image" : "Text").append("-").append(vh.getLayoutPosition()).append("\n");
+                }
+            }
+            builder.append("当前Pool中的TextViewHolder的数量：").append(recycledViewPool.getRecycledViewCount(0)).append("\n");
+            builder.append("当前Pool中的ImgViewHolder的数量：").append(recycledViewPool.getRecycledViewCount(1));
             tv.setText(builder);
         } catch (IllegalAccessException e) {
             e.printStackTrace();

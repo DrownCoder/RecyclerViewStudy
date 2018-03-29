@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvCacheView;
     private TextView tvCreateAndBind;
     private ScrollView scrollView;
+    private boolean isText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvCreateAndBind = findViewById(R.id.tv_create_and_bind);
         scrollView = findViewById(R.id.scroll);
         mData = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            RcyModel model = new RcyModel();
-            model.type = 0;
-            model.title = "这是第" + i + "个";
-            mData.add(model);
-        }
         mAdapter = new RcyAdapter(mData, this, rcy, tvCreateAndBind);
         rcy.setAdapter(mAdapter);
         rcy.setOnLayoutListener(new SRecyclerView.onLayoutListener() {
@@ -44,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void afterLayout() {
+                RcyLog.loaAllCache(tvCacheView, rcy);
             }
         });
         rcy.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -59,11 +55,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rcy.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void packData() {
+        for (int i = 0; i < 100; i++) {
+            RcyModel model = new RcyModel();
+            if (isText) {
+                model.type = 0;
+            }else{
+                if (i % 2 == 0) {
+                    model.type = 0;
+                } else {
+                    model.type = 1;
+                }
+            }
+            model.title = "这是第" + i + "个";
+            mData.add(model);
+        }
+    }
+
     private void initOperate() {
         TextView refresh = findViewById(R.id.refresh);
         TextView delete = findViewById(R.id.delete);
+        TextView change = findViewById(R.id.change);
         refresh.setOnClickListener(this);
         delete.setOnClickListener(this);
+        change.setOnClickListener(this);
     }
 
     @Override
@@ -77,6 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mData.remove(0);
                 mAdapter.notifyItemRemoved(0);
                 //mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.change:
+                v.setSelected(!v.isSelected());
+                isText = v.isSelected();
+                mData.clear();
+                packData();
+                mAdapter.notifyDataSetChanged();
                 break;
         }
     }

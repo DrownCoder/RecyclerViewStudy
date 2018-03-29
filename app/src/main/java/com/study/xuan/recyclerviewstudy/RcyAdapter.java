@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,19 +38,27 @@ public class RcyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textCount++;
             RcyLog.log(tvCreateAndBind, "onCreate---【TextViewHolder】");
             return new TextViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_text, parent, false));
+        } else if (viewType == 1) {
+            RcyLog.log(tvCreateAndBind, "onCreate---【ImageViewHolder】");
+            return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image, parent, false));
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         if (holder instanceof TextViewHolder) {
             //RcyLog.logCache("onBind时：", mRcy);
             //RcyLog.logPool(mRcy);
-            RcyLog.log(tvCreateAndBind, "onBind---【position=" + position + "】");
+            RcyLog.log(tvCreateAndBind, "Text=onBind---【position=" + position + "】");
             TextViewHolder holder1 = (TextViewHolder) holder;
             holder1.tv.setText(mData.get(position).title);
             holder1.tv.setBackgroundColor(Color.parseColor(getRandColorCode()));
+        } else if (holder instanceof ImageViewHolder) {
+            RcyLog.log(tvCreateAndBind, "Img=onBind---【position=" + position + "】");
+            ImageViewHolder holder2 = (ImageViewHolder) holder;
+            holder2.tv.setText(mData.get(position).title);
         }
     }
 
@@ -67,6 +76,16 @@ public class RcyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView tv;
 
         public TextViewHolder(View itemView) {
+            super(itemView);
+            tv = itemView.findViewById(R.id.tv);
+        }
+    }
+
+    class ImageViewHolder extends RecyclerView.ViewHolder {
+        private ImageView iv;
+        private TextView tv;
+
+        public ImageViewHolder(View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.tv);
         }
