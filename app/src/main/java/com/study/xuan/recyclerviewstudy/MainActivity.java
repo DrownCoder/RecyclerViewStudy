@@ -60,11 +60,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             RcyModel model = new RcyModel();
             if (isText) {
                 model.type = 0;
-            }else{
-                if (i % 2 == 0) {
-                    model.type = 0;
+            } else {
+                if (i % 15 == 0) {
+                    model.childData = new ArrayList<>();
+                    for (int j = 0; j < 7; j++) {
+                        model.childData.add(j);
+                    }
+                    model.type = 2;
                 } else {
-                    model.type = 1;
+                    if (i % 2 == 0) {
+                        model.type = 0;
+                    } else {
+                        model.type = 1;
+                    }
                 }
             }
             model.title = "这是第" + i + "个";
